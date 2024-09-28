@@ -24,6 +24,8 @@ export function AudioVisualization() {
 
   return (
     <div className="relative overflow-hidden w-full h-full">
+      {" "}
+      {/* <div className="absolute left-1/2 -translate-x-full w-[100px] h-full bg-gradient-to-r from-transparent to-blue-400/20 border-r-2 border-blue-400 z-20"></div> */}
       <motion.div
         className="h-[64px] relative left-1/2 transition-transform will-change-transform"
         style={{
@@ -55,7 +57,6 @@ export function AudioVisualization() {
           </div>
         ))}
       </motion.div>
-
       <div className="absolute bottom-0 left-0 h-full flex items-center space-x-2 bg-white/90 backdrop-blur-sm pr-4">
         <Select value="volume">
           <SelectTrigger className="w-[180px]">

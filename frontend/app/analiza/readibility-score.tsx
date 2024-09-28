@@ -14,6 +14,18 @@ export function ReadibilityScore() {
       <div className="text-xs text-center text-neutral-600">
         Współczynnik mglistości Gunninga
       </div>
+      <div className="mt-2 pt-2 border-t grid grid-cols-2 border-neutral-200">
+        <div className="flex flex-col items-center gap-1">
+          <div className="text-2xl text-center text-blue-500 my-1">
+            {results.words.length}
+          </div>
+          <div className="text-neutral-600 text-xs">Liczba słów</div>
+        </div>
+        <div className="flex flex-col items-center gap-1">
+          <div className="text-2xl text-center text-blue-500 my-1">2</div>
+          <div className="text-neutral-600 text-xs">Liczba zdań</div>
+        </div>
+      </div>
     </div>
   );
 }

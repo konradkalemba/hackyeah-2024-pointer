@@ -18,6 +18,15 @@ interface AnalysisState {
       end_time: number;
       syllable_count: number;
     }[];
+    repetitions: {
+      start: number;
+      end: number;
+    }[];
+    topic_changes: number[];
+    jargon: string[];
+    nonexistent_words: string[];
+    non_polish_language: string[];
+    passive_voice: string[];
   };
   file?: File;
   setFile: (file: File) => void;
@@ -57,7 +66,7 @@ export const useAnalysisStore = create<AnalysisState>()((set) => ({
         syllable_count: 3,
       },
       {
-        word: "udzielenie",
+        word: "udzielono",
         start_time: 23.42,
         end_time: 24.26,
         syllable_count: 3,
@@ -115,6 +124,15 @@ export const useAnalysisStore = create<AnalysisState>()((set) => ({
         syllable_count: 4,
       },
     ],
+    repetitions: [
+      { start: 10.3, end: 12.1 },
+      { start: 15.6, end: 17.4 },
+    ],
+    topic_changes: [10.3, 15.6],
+    jargon: ["blockchain"],
+    nonexistent_words: ["nie"],
+    non_polish_language: ["kryteriów"],
+    passive_voice: ["udzielono"],
   },
   setStatus: (status: "uploading" | "processing" | "ready") => set({ status }),
 }));
