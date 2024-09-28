@@ -1,5 +1,6 @@
 import { Dropzone } from "@/components/dropzone";
 import { Button } from "@/components/ui/button";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export default function Page() {
   return (
@@ -11,8 +12,8 @@ export default function Page() {
         </h2>
       </div>
       <Dropzone>
-        <Button size="lg" className="absolute right-2 bottom-2">
-          Analizuj
+        <Button size="lg" className="absolute right-1.5 bottom-1.5 gap-2 px-5">
+          Analizuj <ArrowRight weight="bold" className="w-4 h-4" />
         </Button>
       </Dropzone>
     </div>

@@ -16,7 +16,7 @@ export function VideoThumbnail({ file }: { file: File }) {
 
   return (
     <video
-      className="w-full aspect-square object-cover rounded-xl"
+      className="w-full aspect-square object-cover rounded-xl border border-neutral-200"
       src={URL.createObjectURL(file)}
       ref={setTime}
     />

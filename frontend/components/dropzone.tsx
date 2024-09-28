@@ -11,13 +11,13 @@ export function Dropzone({ children }: { children: React.ReactNode }) {
     <div
       {...getRootProps({
         className:
-          "bg-neutral-100 rounded-xl h-[200px] flex flex-col items-center justify-center w-2/3 relative shadow",
+          "bg-neutral-100 rounded-xl h-[200px] flex flex-col items-center justify-center w-2/3 relative shadow border border-neutral-200",
       })}
     >
       <BorderBeam />
       <input {...getInputProps()} />
 
-      <div className="absolute left-2 top-2 grid grid-cols-6">
+      <div className="absolute left-2 top-2 grid grid-cols-6 gap-2">
         {acceptedFiles.map((file) => (
           <div
             key={file.name}
