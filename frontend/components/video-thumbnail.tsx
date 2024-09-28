@@ -19,6 +19,7 @@ export function VideoThumbnail({ file }: { file: File }) {
       className="w-full aspect-square object-cover rounded-xl border border-neutral-200"
       src={URL.createObjectURL(file)}
       ref={setTime}
+      controls={false}
     />
   );
 }
