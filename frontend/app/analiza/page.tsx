@@ -10,6 +10,7 @@ import { VideoPlayer } from "./video-player";
 import { SpinnerGap } from "@phosphor-icons/react/dist/ssr";
 import { Captions } from "./captions";
 import { ReadibilityScore } from "./readibility-score";
+import { Summary } from "./summary";
 
 export default function Page() {
   const status = useAnalysisStore((state) => state.status);
@@ -23,21 +24,11 @@ export default function Page() {
 
   return (
     <div className="w-screen grid grid-cols-1 h-screen gap-4 p-6 grid-rows-[1fr_auto_auto_64px] relative">
-      {/* <div className="absolute bg-white/90 backdrop-blur-lg left-6 top-6 z-20 w-[340px] shadow-sm border border-neutral-200 rounded-lg py-2 px-3 flex flex-col gap-1">
-        <div className="text-accent-foreground/80 text-xs font-medium">
-          Podsumowanie
-        </div>
-        <div className="text-sm">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis,
-          atque vero voluptas nobis minus natus debitis reiciendis voluptatum
-          earum commodi veniam voluptates? Repudiandae asperiores beatae,
-          dolores id corrupti velit molestias.
-        </div>
-      </div> */}
       <div className="flex items-center justify-center relative">
         <div className="absolute inset-0 bg-gradient-radial animate-pulse from-blue-500/30 to-transparent blur-2xl"></div>
         <VideoPlayer />
       </div>
+      {status === "ready" ? <Summary /> : null}
       {status === "ready" ? <Captions /> : null}
       {status === "ready" ? <AudioVisualization /> : null}
       {status === "ready" ? <ReadibilityScore /> : null}
