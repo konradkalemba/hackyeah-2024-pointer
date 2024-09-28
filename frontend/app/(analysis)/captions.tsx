@@ -11,7 +11,7 @@ export function Captions() {
   const currentTime = useMediaState("currentTime", player);
 
   return (
-    <div className="bg-neutral-100 rounded-xl h-[64px] gap-1 flex flex-wrap py-2 px-3 items-center justify-center w-full relative shadow border border-neutral-200 text-center overflow-hidden">
+    <div className="bg-neutral-100 animate-fade-in rounded-xl h-[64px] gap-1 flex flex-wrap py-2 px-3 items-center justify-center w-full relative shadow border border-neutral-200 text-center overflow-hidden">
       {/* <div className="absolute left-1/2 -translate-x-full w-[100px] h-full bg-gradient-to-r from-transparent to-blue-400/20 border-r-2 border-blue-400 z-20"></div> */}
       <motion.div
         className="relative w-full h-5 left-1/2 transition-transform will-change-transform"

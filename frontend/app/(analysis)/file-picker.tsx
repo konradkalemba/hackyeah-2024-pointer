@@ -1,8 +1,11 @@
-import { Dropzone } from "@/components/dropzone";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+"use client";
 
-export default function Page() {
+import { Dropzone } from "@/components/dropzone";
+import { useAnalysisStore } from "./store";
+
+export function FilePicker() {
+  const setFile = useAnalysisStore((state) => state.setFile);
+
   return (
     <div className="container mx-auto min-h-screen flex flex-col items-center justify-center gap-10 pt-16">
       <div className="flex flex-col items-center justify-center gap-3">
@@ -11,11 +14,8 @@ export default function Page() {
           Wybierz plik wideo do oceny jakości wypowiedzi
         </h2>
       </div>
-      <Dropzone>
-        <Button size="lg" className="absolute right-1.5 bottom-1.5 gap-2 px-5">
-          Analizuj <ArrowRight weight="bold" className="w-4 h-4" />
-        </Button>
-      </Dropzone>
+
+      <Dropzone onFileSelect={(file) => setFile(file)} />
     </div>
   );
 }

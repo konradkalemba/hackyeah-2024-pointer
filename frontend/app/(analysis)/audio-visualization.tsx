@@ -23,9 +23,7 @@ export function AudioVisualization() {
   if (!file) return null;
 
   return (
-    <div className="relative overflow-hidden w-full h-full">
-      {" "}
-      {/* <div className="absolute left-1/2 -translate-x-full w-[100px] h-full bg-gradient-to-r from-transparent to-blue-400/20 border-r-2 border-blue-400 z-20"></div> */}
+    <div className="relative overflow-hidden w-full h-full animate-fade-in">
       <motion.div
         className="h-[64px] relative left-1/2 transition-transform will-change-transform"
         style={{

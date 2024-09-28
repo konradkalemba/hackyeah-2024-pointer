@@ -1,7 +1,7 @@
 "use client";
 
 import { MediaPlayer, MediaProvider } from "@vidstack/react";
-import { useAnalysisStore } from "@/app/analiza/store";
+import { useAnalysisStore } from "./store";
 
 export function VideoPlayer() {
   const file = useAnalysisStore((state) => state.file);

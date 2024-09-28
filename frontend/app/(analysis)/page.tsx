@@ -11,16 +11,23 @@ import { SpinnerGap } from "@phosphor-icons/react/dist/ssr";
 import { Captions } from "./captions";
 import { ReadibilityScore } from "./readibility-score";
 import { Summary } from "./summary";
+import { FilePicker } from "./file-picker";
 
 export default function Page() {
   const status = useAnalysisStore((state) => state.status);
   const setStatus = useAnalysisStore((state) => state.setStatus);
 
   useEffect(() => {
-    setTimeout(() => {
-      setStatus("ready");
-    }, 2000);
-  }, []);
+    if (status === "uploading") {
+      setTimeout(() => {
+        setStatus("ready");
+      }, 2000);
+    }
+  }, [status]);
+
+  if (status === "empty") {
+    return <FilePicker />;
+  }
 
   return (
     <div className="w-screen grid grid-cols-1 h-screen gap-4 p-6 grid-rows-[1fr_auto_auto_64px] relative">

@@ -3,27 +3,25 @@
 import { useDropzone } from "react-dropzone";
 import { BorderBeam } from "./ui/border-beam";
 import { VideoThumbnail } from "./video-thumbnail";
-import { useAnalysisStore } from "@/app/analiza/store";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 
-export function Dropzone({ children }: { children: React.ReactNode }) {
+interface DropzoneProps {
+  onFileSelect: (file: File) => void;
+}
+
+export function Dropzone({ onFileSelect }: DropzoneProps) {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     multiple: false,
     accept: {
       "video/*": [".mp4", ".mov", ".avi", ".mkv"],
     },
   });
-  const router = useRouter();
-
-  const setFile = useAnalysisStore((state) => state.setFile);
 
   useEffect(() => {
     if (acceptedFiles.length > 0) {
-      setFile(acceptedFiles[0]);
-      router.push("/analiza");
+      onFileSelect(acceptedFiles[0]);
     }
-  }, [acceptedFiles]);
+  }, [acceptedFiles, onFileSelect]);
 
   return (
     <div
@@ -56,8 +54,6 @@ export function Dropzone({ children }: { children: React.ReactNode }) {
           Przeciągnij i upuść plik wideo, lub kliknij, aby wybrać plik
         </p>
       )}
-
-      {children}
     </div>
   );
 }
