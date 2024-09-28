@@ -94,6 +94,7 @@ const config: Config = {
   plugins: [
     require("@vidstack/react/tailwind.cjs"),
     require("tailwindcss-animate"),
+    require("tailwindcss-bg-patterns"),
   ],
 };
 export default config;

@@ -26,7 +26,7 @@ export function ControlsBar() {
   const remote = useMediaRemote(player);
 
   return (
-    <div className="grid grid-cols-3 gap-4 h-[64px] bg-neutral-900/80 items-center justify-between rounded-full shadow border border-neutral-200 px-4 py-2 pb-3 relative overflow-hidden">
+    <div className="grid grid-cols-3 gap-4 animate-fade-in h-[64px] bg-neutral-900/80 items-center justify-between rounded-full shadow border border-neutral-200 px-4 py-2 pb-3 relative overflow-hidden">
       <div className="text-accent/80 text-xs font-medium tabular-nums">
         {formatTime(time)} / {formatTime(duration)}
       </div>

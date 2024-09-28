@@ -12,7 +12,6 @@ export function VideoPlayer() {
   return (
     <MediaPlayer
       className="w-1/2 aspect-video relative bg-slate-900 text-white shadow overflow-hidden rounded-lg ring-media-focus data-[focus]:ring-4"
-      title="Sprite Fight"
       src={{
         src: URL.createObjectURL(file),
         type: "video/mp4",
