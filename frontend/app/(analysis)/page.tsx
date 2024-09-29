@@ -41,12 +41,10 @@ export default function Page() {
             "Content-Type": "multipart/form-data",
           },
           onUploadProgress: (progressEvent: AxiosProgressEvent) => {
-            setFileProgress(
-              Math.round(
-                (progressEvent.loaded * 100) / (progressEvent.total || 1)
-              )
-            );
-            if (fileProgress === 100) {
+            const newProgress =
+              progressEvent.loaded / (progressEvent.total || 1);
+            setFileProgress(newProgress);
+            if (newProgress === 100) {
               setStatus("processing");
             }
           },
