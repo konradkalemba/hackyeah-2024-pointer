@@ -8,6 +8,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Fragment, useState } from "react";
+import { Repeat, Swap } from "@phosphor-icons/react/dist/ssr";
 
 const SECOND_WIDTH = 100;
 
@@ -17,10 +18,10 @@ export function Captions() {
   const currentTime = useMediaState("currentTime", player);
 
   return (
-    <div className="bg-neutral-100 animate-fade-in rounded-xl h-[64px] gap-1 flex flex-wrap py-2 px-3 items-center justify-center w-full relative shadow border border-neutral-200 text-center overflow-hidden">
+    <div className="bg-neutral-100 animate-fade-in rounded-xl h-[64px] gap-1 flex flex-wrap items-center justify-center w-full relative shadow border border-neutral-200 text-center overflow-hidden">
       {/* <div className="absolute left-1/2 -translate-x-full w-[100px] h-full bg-gradient-to-r from-transparent to-blue-400/20 border-r-2 border-blue-400 z-20"></div> */}
       <motion.div
-        className="relative w-full h-5 left-1/2 transition-transform will-change-transform"
+        className="relative w-full h-full left-1/2 transition-transform py-2 px-3 will-change-transform"
         style={{
           transform: `translateX(-${Math.round(currentTime * SECOND_WIDTH)}px)`,
         }}
@@ -45,13 +46,15 @@ export function Captions() {
           const component = (
             <div
               className={cn(
-                "absolute border rounded-md px-0.5 overflow-hidden transition-opacity",
+                "absolute border rounded-md px-0.5 top-1/2 overflow-hidden transition-opacity",
                 isError
                   ? "bg-rose-100 border-rose-300 hover:bg-rose-200 text-rose-700 before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"
                   : "bg-neutral-900/10 border-neutral-150"
               )}
               style={{
-                transform: `translateX(${word.start_time * SECOND_WIDTH}px)`,
+                transform: `translateX(${
+                  word.start_time * SECOND_WIDTH
+                }px) translateY(-50%)`,
                 width: `${(word.end_time - word.start_time) * SECOND_WIDTH}px`,
                 opacity: currentTime > word.start_time ? 1 : 0.5,
               }}
@@ -62,73 +65,74 @@ export function Captions() {
 
           if (isError) {
             return (
-              <ErrorCaption
+              <ErrorPopover
                 key={index}
-                word={word}
+                time={word.start_time}
                 currentTime={currentTime}
-                isJargon={isJargon}
-                isNonPolishLanguage={isNonPolishLanguage}
-                isPassiveVoice={isPassiveVoice}
-                isNonexistentWord={isNonexistentWord}
+                description={[
+                  isJargon && "Żargon",
+                  isNonPolishLanguage && "Obcy język",
+                  isPassiveVoice && "Strona bierna",
+                  isNonexistentWord && "Nieistniejące słowo",
+                ]
+                  .filter(Boolean)
+                  .join(", ")}
               >
                 {component}
-              </ErrorCaption>
+              </ErrorPopover>
             );
           }
 
           return <Fragment key={index}>{component}</Fragment>;
         })}
+        {results.topic_changes.map((topicChange, index) => (
+          <ErrorPopover
+            key={index}
+            time={topicChange}
+            currentTime={currentTime}
+            description={"Zmiana tematu"}
+          >
+            <div
+              key={index}
+              className="top-[1px] bg-rose-600 w-4 h-4 flex items-center transition-opacity justify-center rounded-full absolute"
+              style={{
+                transform: `translateX(${topicChange * SECOND_WIDTH}px)`,
+                opacity: currentTime > topicChange ? 1 : 0.5,
+              }}
+            >
+              <Swap className="w-3 h-3 text-rose-50" weight="bold" />
+            </div>
+          </ErrorPopover>
+        ))}
       </motion.div>
     </div>
   );
 }
 
-function ErrorCaption({
-  word,
+function ErrorPopover({
+  time,
   currentTime,
-  isJargon,
-  isNonPolishLanguage,
-  isPassiveVoice,
-  isNonexistentWord,
+  description,
   children,
 }: {
-  word: {
-    start_time: number;
-    end_time: number;
-    word: string;
-  };
+  time: number;
   currentTime: number;
-  isJargon: boolean;
-  isNonPolishLanguage: boolean;
-  isPassiveVoice: boolean;
-  isNonexistentWord: boolean;
+  description: string;
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Popover
-      open={
-        isOpen ||
-        (currentTime > word.start_time && currentTime < word.start_time + 1)
-      }
+      open={isOpen || (currentTime > time && currentTime < time + 1)}
       onOpenChange={setIsOpen}
     >
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent side="top" className="w-[200px] flex flex-col gap-1">
         <p className="text-xs font-medium text-rose-600">Błąd</p>
-        <p className="text-sm">
-          {[
-            isJargon && "Żargon",
-            isNonPolishLanguage && "Obcy język",
-            isPassiveVoice && "Strona bierna",
-            isNonexistentWord && "Nieistniejące słowo",
-          ]
-            .filter(Boolean)
-            .join(", ")}
-        </p>
+        <p className="text-sm">{description}</p>
         <p className="text-xs text-neutral-500 tabular-nums">
-          {formatTime(word.start_time)}
+          {formatTime(time)}
         </p>
       </PopoverContent>
     </Popover>

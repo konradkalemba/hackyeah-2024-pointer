@@ -130,7 +130,7 @@ export const useAnalysisStore = create<AnalysisState>()((set) => ({
       { start: 10.3, end: 12.1 },
       { start: 15.6, end: 17.4 },
     ],
-    topic_changes: [10.3, 15.6],
+    topic_changes: [20.3, 15.6],
     jargon: ["blockchain"],
     nonexistent_words: ["nie"],
     non_polish_language: ["kryteriów"],
