@@ -13,7 +13,7 @@ export function ReadibilityScore() {
         Ocena prostości języka
       </div>
       <div className="text-5xl text-center text-yellow-500 my-2">
-        {results.readability_score}
+        {results?.readability_score}
       </div>
       <div className="text-xs text-center text-neutral-600">
         Współczynnik mglistości Gunninga
@@ -22,10 +22,12 @@ export function ReadibilityScore() {
         <div className="flex flex-col items-center gap-1">
           <div className="text-2xl text-center text-blue-500 my-1">
             <MotionNumber
-              value={results.words.reduce(
-                (acc, word) => acc + (currentTime > word.start_time ? 1 : 0),
-                0
-              )}
+              value={
+                results?.words.reduce(
+                  (acc, word) => acc + (currentTime > word.start_time ? 1 : 0),
+                  0
+                ) ?? 0
+              }
             />
           </div>
           <div className="text-neutral-600 text-xs">Liczba słów</div>

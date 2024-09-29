@@ -9,7 +9,7 @@ export function Summary() {
         Podsumowanie
       </div>
       <div className="text-sm">
-        {results.words.map((word) => word.word).join(" ")}
+        {results?.words.map((word) => word.word).join(" ")}
       </div>
     </div>
   );

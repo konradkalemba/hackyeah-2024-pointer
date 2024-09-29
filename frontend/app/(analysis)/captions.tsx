@@ -1,4 +1,4 @@
-import { formatTime, useMediaRemote, useMediaState } from "@vidstack/react";
+import { formatTime, useMediaState } from "@vidstack/react";
 import { useAnalysisStore } from "./store";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -8,7 +8,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Fragment, useState } from "react";
-import { Repeat, Swap } from "@phosphor-icons/react/dist/ssr";
+import { Swap } from "@phosphor-icons/react/dist/ssr";
 
 const SECOND_WIDTH = 100;
 
@@ -19,25 +19,24 @@ export function Captions() {
 
   return (
     <div className="bg-neutral-100 animate-fade-in rounded-xl h-[64px] gap-1 flex flex-wrap items-center justify-center w-full relative shadow border border-neutral-200 text-center overflow-hidden">
-      {/* <div className="absolute left-1/2 -translate-x-full w-[100px] h-full bg-gradient-to-r from-transparent to-blue-400/20 border-r-2 border-blue-400 z-20"></div> */}
       <motion.div
         className="relative w-full h-full left-1/2 transition-transform py-2 px-3 will-change-transform"
         style={{
           transform: `translateX(-${Math.round(currentTime * SECOND_WIDTH)}px)`,
         }}
       >
-        {results.words.map((word, index) => {
-          const isJargon = results.jargon.includes(word.word.toLowerCase());
-          const isNonPolishLanguage = results.non_polish_language.includes(
+        {results?.words.map((word, index) => {
+          const isJargon = results?.jargon.includes(word.word.toLowerCase());
+          const isNonPolishLanguage = results?.non_polish_language.includes(
             word.word.toLowerCase()
           );
-          const isPassiveVoice = results.passive_voice.includes(
+          const isPassiveVoice = results?.passive_voice.includes(
             word.word.toLowerCase()
           );
-          const isNonexistentWord = results.nonexistent_words.includes(
+          const isNonexistentWord = results?.nonexistent_words.includes(
             word.word.toLowerCase()
           );
-          const isRepetition = results.repetitions.includes(index);
+          const isRepetition = results?.repetitions.includes(index);
           const isError =
             isJargon ||
             isNonPolishLanguage ||
@@ -88,7 +87,7 @@ export function Captions() {
 
           return <Fragment key={index}>{component}</Fragment>;
         })}
-        {results.topic_changes.map((topicChange, index) => (
+        {results?.topic_changes.map((topicChange, index) => (
           <ErrorPopover
             key={index}
             time={results.words[topicChange]?.start_time}

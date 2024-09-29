@@ -24,14 +24,6 @@ export default function Page() {
   const abortController = useRef<AbortController>();
   const [fileProgress, setFileProgress] = useState(0);
 
-  // useEffect(() => {
-  //   if (status === "uploading") {
-  //     setTimeout(() => {
-  //       setStatus("ready");
-  //     }, 2000);
-  //   }
-  // }, [status]);
-
   useAnalysisStore.subscribe(async (state) => {
     if (state.status === "before-upload") {
       abortController.current = new AbortController();
