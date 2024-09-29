@@ -18,6 +18,11 @@ interface AnalysisState {
       end_time: number;
       duration: number;
     }[];
+    loud_segments: {
+      start_time: number;
+      end_time: number;
+      duration: number;
+    }[];
     readability_score: number;
     words: {
       word: string;
@@ -57,6 +62,7 @@ export const useAnalysisStore = create<AnalysisState>()((set) => ({
         duration: 5.0,
       },
     ],
+    loud_segments: [],
     readability_score: 21.4,
     words: [
       {

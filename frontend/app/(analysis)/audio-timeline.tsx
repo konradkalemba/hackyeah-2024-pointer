@@ -5,6 +5,8 @@ import { AudioVisualizer } from "react-audio-visualize";
 import { useMediaState } from "@vidstack/react";
 import { motion } from "framer-motion";
 
+const SECOND_WIDTH = 100;
+
 export function AudioTimeline() {
   const file = useAnalysisStore((state) => state.file);
   const player = useAnalysisStore((state) => state.player);
@@ -19,13 +21,13 @@ export function AudioTimeline() {
       <motion.div
         className="h-[64px] relative left-1/2 transition-transform will-change-transform"
         style={{
-          transform: `translateX(-${Math.round(currentTime * 100)}px)`,
+          transform: `translateX(-${Math.round(currentTime * SECOND_WIDTH)}px)`,
         }}
       >
         <AudioVisualizer
           key={duration}
           blob={file}
-          width={duration * 100}
+          width={duration * SECOND_WIDTH}
           height={64}
           barWidth={2}
           gap={0}
@@ -37,8 +39,8 @@ export function AudioTimeline() {
             key={pause.start_time}
             className="absolute top-[50%] -translate-y-[50%] h-2/3 bg-rose-400/20 border border-rose-300 rounded-md px-0.5 hover:bg-rose-200 transition-colors cursor-pointer before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"
             style={{
-              left: `${pause.start_time * 100}px`,
-              width: `${pause.duration * 100}px`,
+              left: `${pause.start_time * SECOND_WIDTH}px`,
+              width: `${pause.duration * SECOND_WIDTH}px`,
             }}
           >
             <div className="text-xs text-rose-600 font-medium z-20">
@@ -51,12 +53,26 @@ export function AudioTimeline() {
             key={segment.start_time}
             className="absolute top-[50%] -translate-y-[50%] h-2/3 bg-rose-400/20 border border-rose-300 rounded-md px-0.5 hover:bg-rose-200 transition-colors cursor-pointer before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"
             style={{
-              left: `${segment.start_time * 100}px`,
-              width: `${segment.duration * 100}px`,
+              left: `${segment.start_time * SECOND_WIDTH}px`,
+              width: `${segment.duration * SECOND_WIDTH}px`,
             }}
           >
             <div className="text-xs text-rose-600 font-medium z-20">
               Mówienie zbyt cicho
+            </div>
+          </div>
+        ))}
+        {results.loud_segments.map((segment) => (
+          <div
+            key={segment.start_time}
+            className="absolute top-[50%] -translate-y-[50%] h-2/3 bg-rose-400/20 border border-rose-300 rounded-md px-0.5 hover:bg-rose-200 transition-colors cursor-pointer before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"
+            style={{
+              left: `${segment.start_time * SECOND_WIDTH}px`,
+              width: `${segment.duration * SECOND_WIDTH}px`,
+            }}
+          >
+            <div className="text-xs text-rose-600 font-medium z-20">
+              Mówienie zbyt głośno
             </div>
           </div>
         ))}
