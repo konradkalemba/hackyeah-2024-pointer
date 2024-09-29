@@ -4,8 +4,7 @@ import { useAnalysisStore } from "./store";
 import { AudioVisualizer } from "react-audio-visualize";
 import { useMediaState } from "@vidstack/react";
 import { motion } from "framer-motion";
-
-const SECOND_WIDTH = 100;
+import { SECOND_WIDTH } from "@/lib/config";
 
 export function AudioTimeline() {
   const file = useAnalysisStore((state) => state.file);

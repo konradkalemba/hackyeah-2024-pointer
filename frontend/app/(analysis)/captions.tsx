@@ -9,8 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { Fragment, useState } from "react";
 import { Swap } from "@phosphor-icons/react/dist/ssr";
-
-const SECOND_WIDTH = 100;
+import { SECOND_WIDTH } from "@/lib/config";
 
 export function Captions() {
   const player = useAnalysisStore((state) => state.player);
