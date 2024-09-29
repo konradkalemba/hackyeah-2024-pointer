@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: audio-analysis-backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - frontend
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: audio-analysis-frontend
+    ports:
+      - "80:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
