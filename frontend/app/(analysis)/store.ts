@@ -2,7 +2,7 @@ import { MediaPlayerInstance } from "@vidstack/react";
 import { createRef, RefObject } from "react";
 import { create } from "zustand";
 
-type Status = "empty" | "uploading" | "processing" | "ready";
+type Status = "empty" | "before-upload" | "uploading" | "processing" | "ready";
 
 interface AnalysisState {
   status: Status;
@@ -32,6 +32,7 @@ interface AnalysisState {
     non_polish_language: string[];
     passive_voice: string[];
   };
+  setResults: (results: AnalysisState["results"]) => void;
   file?: File;
   setFile: (file: File) => void;
   player: RefObject<MediaPlayerInstance>;
@@ -40,7 +41,7 @@ interface AnalysisState {
 export const useAnalysisStore = create<AnalysisState>()((set) => ({
   status: "empty",
   player: createRef<MediaPlayerInstance>(),
-  setFile: (file: File) => set({ file, status: "uploading" }),
+  setFile: (file: File) => set({ file, status: "before-upload" }),
   results: {
     long_pauses: [
       {
@@ -142,5 +143,6 @@ export const useAnalysisStore = create<AnalysisState>()((set) => ({
     non_polish_language: ["kryteriów"],
     passive_voice: ["udzielono"],
   },
+  setResults: (results: AnalysisState["results"]) => set({ results }),
   setStatus: (status: Status) => set({ status }),
 }));

@@ -1,13 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef, useState } from "react";
+import axios from "axios";
+import { env } from "@/env";
+import MotionNumber from "motion-number";
+import { SpinnerGap } from "@phosphor-icons/react/dist/ssr";
 
 import { Button } from "@/components/ui/button";
 import { AudioTimeline } from "./audio-timeline";
 import { ControlsBar } from "./controls-bar";
 import { useAnalysisStore } from "./store";
 import { VideoPlayer } from "./video-player";
-import { SpinnerGap } from "@phosphor-icons/react/dist/ssr";
 import { Captions } from "./captions";
 import { ReadibilityScore } from "./panels/readibility-score";
 import { Summary } from "./panels/summary";
@@ -17,14 +20,52 @@ import { Errors } from "./panels/errors";
 export default function Page() {
   const status = useAnalysisStore((state) => state.status);
   const setStatus = useAnalysisStore((state) => state.setStatus);
+  const setResults = useAnalysisStore((state) => state.setResults);
+  const abortController = useRef<AbortController>();
+  const [fileProgress, setFileProgress] = useState(0);
 
-  useEffect(() => {
-    if (status === "uploading") {
-      setTimeout(() => {
-        setStatus("ready");
-      }, 2000);
+  // useEffect(() => {
+  //   if (status === "uploading") {
+  //     setTimeout(() => {
+  //       setStatus("ready");
+  //     }, 2000);
+  //   }
+  // }, [status]);
+
+  useAnalysisStore.subscribe(async (state) => {
+    if (state.status === "before-upload") {
+      abortController.current = new AbortController();
+
+      setStatus("uploading");
+
+      const formData = new FormData();
+      formData.append("file", state.file as Blob);
+
+      const request = await axios.post(
+        `${env.NEXT_PUBLIC_API_URL}/analyze`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: (progressEvent: any) => {
+            setFileProgress(
+              Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            );
+            if (fileProgress === 100) {
+              setStatus("processing");
+            }
+          },
+          signal: abortController.current.signal,
+        }
+      );
+
+      const json = request.data;
+
+      setResults(json);
+      setStatus("ready");
     }
-  }, [status]);
+  });
 
   if (status === "empty") {
     return <FilePicker />;
@@ -42,19 +83,40 @@ export default function Page() {
             <Errors />
             <Summary />
           </div>
+          <div className="absolute animate-fade-in flex flex-col gap-4 right-6 top-6 z-20 w-[340px]">
+            <ReadibilityScore />
+          </div>
           <Captions />
           <AudioTimeline />
-          <ReadibilityScore />
           <ControlsBar />
         </>
       ) : null}
-      {status === "uploading" && (
+      {(status === "uploading" || status === "processing") && (
         <div className="flex flex-col gap-4 items-center justify-center">
           <div className="text-sm text-neutral-600 font-medium flex items-center gap-2">
             <SpinnerGap className="animate-spin w-4 h-4" weight="bold" />{" "}
-            Wgrywanie pliku...(60%)
+            {status === "uploading" ? (
+              <>
+                Wgrywanie pliku...{" "}
+                <MotionNumber
+                  value={fileProgress}
+                  format={{
+                    notation: "compact",
+                    style: "percent",
+                  }}
+                />
+              </>
+            ) : (
+              "Przetwarzanie wideo..."
+            )}
           </div>
-          <Button variant="outline" onClick={() => setStatus("empty")}>
+          <Button
+            variant="outline"
+            onClick={() => {
+              abortController.current?.abort();
+              setStatus("empty");
+            }}
+          >
             Anuluj
           </Button>
         </div>
