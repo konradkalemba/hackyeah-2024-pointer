@@ -1,4 +1,4 @@
-import { useAnalysisStore } from "./store";
+import { useAnalysisStore } from "../store";
 
 export function Errors() {
   const results = useAnalysisStore((state) => state.results);

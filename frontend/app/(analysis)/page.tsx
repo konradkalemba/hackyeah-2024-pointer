@@ -9,10 +9,10 @@ import { useAnalysisStore } from "./store";
 import { VideoPlayer } from "./video-player";
 import { SpinnerGap } from "@phosphor-icons/react/dist/ssr";
 import { Captions } from "./captions";
-import { ReadibilityScore } from "./readibility-score";
-import { Summary } from "./summary";
+import { ReadibilityScore } from "./panels/readibility-score";
+import { Summary } from "./panels/summary";
 import { FilePicker } from "./file-picker";
-import { Errors } from "./errors";
+import { Errors } from "./panels/errors";
 
 export default function Page() {
   const status = useAnalysisStore((state) => state.status);

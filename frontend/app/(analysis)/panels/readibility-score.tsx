@@ -1,5 +1,5 @@
 import { useMediaState } from "@vidstack/react";
-import { useAnalysisStore } from "./store";
+import { useAnalysisStore } from "../store";
 import MotionNumber from "motion-number";
 
 export function ReadibilityScore() {
