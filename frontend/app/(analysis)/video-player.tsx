@@ -2,8 +2,9 @@
 
 import { MediaPlayer, MediaProvider } from "@vidstack/react";
 import { useAnalysisStore } from "./store";
+import { memo } from "react";
 
-export function VideoPlayer() {
+export function VideoPlayerComponent() {
   const file = useAnalysisStore((state) => state.file);
   const player = useAnalysisStore((state) => state.player);
 
@@ -23,3 +24,5 @@ export function VideoPlayer() {
     </MediaPlayer>
   );
 }
+
+export const VideoPlayer = memo(VideoPlayerComponent);

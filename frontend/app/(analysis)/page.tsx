@@ -44,7 +44,7 @@ export default function Page() {
             const newProgress =
               progressEvent.loaded / (progressEvent.total || 1);
             setFileProgress(newProgress);
-            if (newProgress === 100) {
+            if (newProgress === 1) {
               setStatus("processing");
             }
           },
