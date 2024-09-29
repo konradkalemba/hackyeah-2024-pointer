@@ -2,9 +2,10 @@ fastapi
 uvicorn
 librosa
 numpy
-whisper
+openai-whisper
 pyphen
 pydantic
 scikit-learn
 python-multipart
 textstat
+numba
