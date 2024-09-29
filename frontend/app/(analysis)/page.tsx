@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import axios from "axios";
+import axios, { AxiosProgressEvent } from "axios";
 import { env } from "@/env";
 import MotionNumber from "motion-number";
 import { SpinnerGap } from "@phosphor-icons/react/dist/ssr";
@@ -40,9 +40,11 @@ export default function Page() {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          onUploadProgress: (progressEvent: any) => {
+          onUploadProgress: (progressEvent: AxiosProgressEvent) => {
             setFileProgress(
-              Math.round((progressEvent.loaded * 100) / progressEvent.total)
+              Math.round(
+                (progressEvent.loaded * 100) / (progressEvent.total || 1)
+              )
             );
             if (fileProgress === 100) {
               setStatus("processing");
