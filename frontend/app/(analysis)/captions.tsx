@@ -91,7 +91,7 @@ export function Captions() {
         {results.topic_changes.map((topicChange, index) => (
           <ErrorPopover
             key={index}
-            time={results.words[index]?.start_time}
+            time={results.words[topicChange]?.start_time}
             currentTime={currentTime}
             description={"Zmiana tematu"}
           >
@@ -100,10 +100,12 @@ export function Captions() {
               className="top-[1px] bg-rose-600 w-4 h-4 flex items-center transition-opacity justify-center rounded-full absolute"
               style={{
                 transform: `translateX(${
-                  results.words[index]?.start_time * SECOND_WIDTH
+                  results.words[topicChange]?.start_time * SECOND_WIDTH
                 }px)`,
                 opacity:
-                  currentTime > results.words[index]?.start_time ? 1 : 0.5,
+                  currentTime > results.words[topicChange]?.start_time
+                    ? 1
+                    : 0.5,
               }}
             >
               <Swap className="w-3 h-3 text-rose-50" weight="bold" />
