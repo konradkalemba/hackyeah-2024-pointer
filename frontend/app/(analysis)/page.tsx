@@ -34,7 +34,7 @@ export default function Page() {
       formData.append("file", state.file as Blob);
 
       const request = await axios.post(
-        `${env.NEXT_PUBLIC_API_URL}/analyze`,
+        `${env.NEXT_PUBLIC_API_URL}/upload`,
         formData,
         {
           headers: {
