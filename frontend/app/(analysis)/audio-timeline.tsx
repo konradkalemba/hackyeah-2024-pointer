@@ -2,18 +2,10 @@
 
 import { useAnalysisStore } from "./store";
 import { AudioVisualizer } from "react-audio-visualize";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useMediaState } from "@vidstack/react";
 import { motion } from "framer-motion";
 
-export function AudioVisualization() {
+export function AudioTimeline() {
   const file = useAnalysisStore((state) => state.file);
   const player = useAnalysisStore((state) => state.player);
   const results = useAnalysisStore((state) => state.results);
@@ -40,22 +32,36 @@ export function AudioVisualization() {
           barColor={"#00000022"}
           style={{ position: "absolute", left: 0, top: 0 }}
         />
-        {results.long_pauses.map((pause: any) => (
+        {results.long_pauses.map((pause) => (
           <div
             key={pause.start_time}
-            className="absolute top-[50%] -translate-y-[50%] h-1/2 bg-rose-100 border border-rose-300 rounded-md px-0.5 hover:bg-rose-200 transition-colors cursor-pointer before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"
+            className="absolute top-[50%] -translate-y-[50%] h-2/3 bg-rose-400/20 border border-rose-300 rounded-md px-0.5 hover:bg-rose-200 transition-colors cursor-pointer before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"
             style={{
               left: `${pause.start_time * 100}px`,
               width: `${pause.duration * 100}px`,
             }}
           >
-            <div className="text-xs text-rose-500 font-medium z-20">
+            <div className="text-xs text-rose-600 font-medium z-20">
               Długa pauza
             </div>
           </div>
         ))}
+        {results.quiet_segments.map((segment) => (
+          <div
+            key={segment.start_time}
+            className="absolute top-[50%] -translate-y-[50%] h-2/3 bg-rose-400/20 border border-rose-300 rounded-md px-0.5 hover:bg-rose-200 transition-colors cursor-pointer before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"
+            style={{
+              left: `${segment.start_time * 100}px`,
+              width: `${segment.duration * 100}px`,
+            }}
+          >
+            <div className="text-xs text-rose-600 font-medium z-20">
+              Mówienie zbyt cicho
+            </div>
+          </div>
+        ))}
       </motion.div>
-      <div className="absolute bottom-0 left-0 h-full flex items-center space-x-2 bg-white/90 backdrop-blur-sm pr-4">
+      {/* <div className="absolute bottom-0 left-0 h-full flex items-center space-x-2 bg-white/90 backdrop-blur-sm pr-4">
         <Select value="volume">
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Wybierz cechę" />
@@ -69,7 +75,7 @@ export function AudioVisualization() {
             </SelectGroup>
           </SelectContent>
         </Select>
-      </div>
+      </div> */}
     </div>
   );
 }
