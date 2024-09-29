@@ -34,7 +34,7 @@ export function AudioTimeline() {
           barColor={"#00000022"}
           style={{ position: "absolute", left: 0, top: 0 }}
         />
-        {results.long_pauses.map((pause) => (
+        {results?.long_pauses?.map((pause) => (
           <div
             key={pause.start_time}
             className="absolute top-[50%] -translate-y-[50%] h-2/3 bg-rose-400/20 border border-rose-300 rounded-md px-0.5 hover:bg-rose-200 transition-colors cursor-pointer before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"
@@ -48,7 +48,7 @@ export function AudioTimeline() {
             </div>
           </div>
         ))}
-        {results.quiet_segments.map((segment) => (
+        {results?.quiet_segments?.map((segment) => (
           <div
             key={segment.start_time}
             className="absolute top-[50%] -translate-y-[50%] h-2/3 bg-rose-400/20 border border-rose-300 rounded-md px-0.5 hover:bg-rose-200 transition-colors cursor-pointer before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"
@@ -62,7 +62,7 @@ export function AudioTimeline() {
             </div>
           </div>
         ))}
-        {results.loud_segments.map((segment) => (
+        {results?.loud_segments?.map((segment) => (
           <div
             key={segment.start_time}
             className="absolute top-[50%] -translate-y-[50%] h-2/3 bg-rose-400/20 border border-rose-300 rounded-md px-0.5 hover:bg-rose-200 transition-colors cursor-pointer before:absolute before:inset-0 before:pattern-diagonal-lines before:pattern-rose-400 before:pattern-bg-rose-100 before:pattern-size-8 before:pattern-opacity-10"

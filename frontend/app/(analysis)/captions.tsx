@@ -26,17 +26,17 @@ export function Captions() {
         }}
       >
         {results?.words.map((word, index) => {
-          const isJargon = results?.jargon.includes(word.word.toLowerCase());
-          const isNonPolishLanguage = results?.non_polish_language.includes(
+          const isJargon = results?.jargon?.includes(word.word.toLowerCase());
+          const isNonPolishLanguage = results?.non_polish_language?.includes(
             word.word.toLowerCase()
           );
-          const isPassiveVoice = results?.passive_voice.includes(
+          const isPassiveVoice = results?.passive_voice?.includes(
             word.word.toLowerCase()
           );
-          const isNonexistentWord = results?.nonexistent_words.includes(
+          const isNonexistentWord = results?.nonexistent_words?.includes(
             word.word.toLowerCase()
           );
-          const isRepetition = results?.repetitions.includes(index);
+          const isRepetition = results?.repetitions?.includes(index);
           const isError =
             isJargon ||
             isNonPolishLanguage ||
@@ -87,7 +87,7 @@ export function Captions() {
 
           return <Fragment key={index}>{component}</Fragment>;
         })}
-        {results?.topic_changes.map((topicChange, index) => (
+        {results?.topic_changes?.map((topicChange, index) => (
           <ErrorPopover
             key={index}
             time={results.words[topicChange]?.start_time}
