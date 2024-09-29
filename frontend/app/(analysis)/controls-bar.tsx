@@ -5,7 +5,6 @@ import {
   ArrowLineLeft,
   Pause,
   Play,
-  Rewind,
   SpeakerSimpleHigh,
   SpeakerSimpleSlash,
 } from "@phosphor-icons/react/dist/ssr";
