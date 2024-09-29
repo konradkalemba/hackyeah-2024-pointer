@@ -12,19 +12,19 @@ import { useAnalysisStore } from "./store";
 
 export function TimeSlider() {
   const player = useAnalysisStore((state) => state.player);
-  const time = useMediaState("currentTime", player),
-    canSeek = useMediaState("canSeek", player),
-    duration = useMediaState("duration", player),
-    seeking = useMediaState("seeking", player),
-    remote = useMediaRemote(player),
-    step = (1 / duration) * 100,
-    [value, setValue] = useState(0),
-    { previewRootRef, previewRef, previewValue } = useSliderPreview({
-      clamp: true,
-      offset: 6,
-      orientation: "horizontal",
-    }),
-    previewTime = (previewValue / 100) * duration;
+  const time = useMediaState("currentTime", player);
+  const canSeek = useMediaState("canSeek", player);
+  const duration = useMediaState("duration", player);
+  const seeking = useMediaState("seeking", player);
+  const remote = useMediaRemote(player);
+  const step = (1 / duration) * 100;
+  const [value, setValue] = useState(0);
+  const { previewRootRef, previewRef, previewValue } = useSliderPreview({
+    clamp: true,
+    offset: 6,
+    orientation: "horizontal",
+  });
+  const previewTime = (previewValue / 100) * duration;
 
   // Keep slider value in-sync with playback.
   useEffect(() => {
