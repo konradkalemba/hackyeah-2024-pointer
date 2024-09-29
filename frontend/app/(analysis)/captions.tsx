@@ -105,22 +105,17 @@ function ErrorCaption({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isManual, setIsManual] = useState(false);
 
   return (
     <Popover
       open={
-        isManual
-          ? isOpen
-          : currentTime > word.start_time && currentTime < word.start_time + 1
+        isOpen ||
+        (currentTime > word.start_time && currentTime < word.start_time + 1)
       }
-      onOpenChange={(open) => {
-        setIsOpen(open);
-        setIsManual(true);
-      }}
+      onOpenChange={setIsOpen}
     >
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="w-[200px] flex flex-col gap-1">
+      <PopoverContent side="top" className="w-[200px] flex flex-col gap-1">
         <p className="text-xs font-medium text-rose-600">Błąd</p>
         <p className="text-sm">
           {[
