@@ -37,11 +37,13 @@ export function Captions() {
           const isNonexistentWord = results.nonexistent_words.includes(
             word.word.toLowerCase()
           );
+          const isRepetition = results.repetitions.includes(index);
           const isError =
             isJargon ||
             isNonPolishLanguage ||
             isPassiveVoice ||
-            isNonexistentWord;
+            isNonexistentWord ||
+            isRepetition;
 
           const component = (
             <div
@@ -74,6 +76,7 @@ export function Captions() {
                   isNonPolishLanguage && "Obcy język",
                   isPassiveVoice && "Strona bierna",
                   isNonexistentWord && "Nieistniejące słowo",
+                  isRepetition && "Powtórzenie",
                 ]
                   .filter(Boolean)
                   .join(", ")}
@@ -88,7 +91,7 @@ export function Captions() {
         {results.topic_changes.map((topicChange, index) => (
           <ErrorPopover
             key={index}
-            time={topicChange}
+            time={results.words[index]?.start_time}
             currentTime={currentTime}
             description={"Zmiana tematu"}
           >
@@ -96,8 +99,11 @@ export function Captions() {
               key={index}
               className="top-[1px] bg-rose-600 w-4 h-4 flex items-center transition-opacity justify-center rounded-full absolute"
               style={{
-                transform: `translateX(${topicChange * SECOND_WIDTH}px)`,
-                opacity: currentTime > topicChange ? 1 : 0.5,
+                transform: `translateX(${
+                  results.words[index]?.start_time * SECOND_WIDTH
+                }px)`,
+                opacity:
+                  currentTime > results.words[index]?.start_time ? 1 : 0.5,
               }}
             >
               <Swap className="w-3 h-3 text-rose-50" weight="bold" />
