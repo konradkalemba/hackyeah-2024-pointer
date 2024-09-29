@@ -2,9 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import {
+  ArrowLineLeft,
   Pause,
   Play,
   Rewind,
+  SpeakerSimpleHigh,
   SpeakerSimpleSlash,
 } from "@phosphor-icons/react/dist/ssr";
 
@@ -23,6 +25,7 @@ export function ControlsBar() {
   const time = useMediaState("currentTime", player);
   const duration = useMediaState("duration", player);
   const isPaused = useMediaState("paused", player);
+  const isMuted = useMediaState("muted", player);
   const remote = useMediaRemote(player);
 
   return (
@@ -31,14 +34,23 @@ export function ControlsBar() {
         {formatTime(time)} / {formatTime(duration)}
       </div>
       <div className="flex items-center justify-center gap-2">
-        <Button
-          size="icon"
-          variant="ghost"
-          className="rounded-full hover:bg-accent/10 hover:text-accent text-accent/70"
-        >
-          <Rewind weight="bold" className="w-5 h-5" />
-        </Button>
         <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="rounded-full hover:bg-accent/10 hover:text-accent text-accent/70"
+                onClick={() => remote.seek(0)}
+                disabled={time === 0}
+              >
+                <ArrowLineLeft weight="bold" className="w-5 h-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Przewiń do początku</p>
+            </TooltipContent>
+          </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -58,14 +70,27 @@ export function ControlsBar() {
               <p>{isPaused ? "Wznów" : "Wstrzymaj"}</p>
             </TooltipContent>
           </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                size="icon"
+                variant="ghost"
+                className="rounded-full hover:bg-accent/10 hover:text-accent text-accent/70"
+                onClick={() => (isMuted ? remote.unmute() : remote.mute())}
+              >
+                {isMuted ? (
+                  <SpeakerSimpleSlash weight="bold" className="w-5 h-5" />
+                ) : (
+                  <SpeakerSimpleHigh weight="bold" className="w-5 h-5" />
+                )}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{isMuted ? "Odcisz" : "Wycisz"}</p>
+            </TooltipContent>
+          </Tooltip>
         </TooltipProvider>
-        <Button
-          size="icon"
-          variant="ghost"
-          className="rounded-full hover:bg-accent/10 hover:text-accent text-accent/70"
-        >
-          <SpeakerSimpleSlash weight="bold" className="w-5 h-5" />
-        </Button>
       </div>
       <div className=""></div>
       <TimeSlider />
