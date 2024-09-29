@@ -12,6 +12,7 @@ import { Captions } from "./captions";
 import { ReadibilityScore } from "./readibility-score";
 import { Summary } from "./summary";
 import { FilePicker } from "./file-picker";
+import { Errors } from "./errors";
 
 export default function Page() {
   const status = useAnalysisStore((state) => state.status);
@@ -35,7 +36,13 @@ export default function Page() {
         <div className="absolute inset-0 bg-gradient-radial animate-pulse from-blue-500/30 to-transparent blur-2xl"></div>
         <VideoPlayer />
       </div>
-      {status === "ready" ? <Summary /> : null}
+      {/* {status === "ready" ? <Summary /> : null} */}
+      {status === "ready" ? (
+        <div className="absolute animate-fade-in flex flex-col gap-4 left-6 top-6 z-20 w-[340px]">
+          <Errors />
+          <Summary />
+        </div>
+      ) : null}
       {status === "ready" ? <Captions /> : null}
       {status === "ready" ? <AudioVisualization /> : null}
       {status === "ready" ? <ReadibilityScore /> : null}
