@@ -23,7 +23,7 @@ app.add_middleware(
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
-    if not file.filename.lower().endswith(('.wav', '.mp3', '.m4a', '.flac', '.ogg', '.wma')):
+    if not file.filename.lower().endswith(('.wav', '.mp3', '.m4a', '.flac', '.ogg', '.wma','mp4','mov','webm','mkv')):
         raise HTTPException(status_code=400, detail="Nieprawidłowy format pliku.")
     try:
         # Zapisz przesłany plik tymczasowo
